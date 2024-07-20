@@ -315,7 +315,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             state.status == Status.isRegistered) {
                           // Add User details to db
                           final db = FirebaseFirestore.instance;
-                          db.collection('user').doc('${userModel.name}${userModel.key}').set(userModel.toJson());
+                          db
+                              .collection('user')
+                              .doc('${userModel.name}${userModel.key}')
+                              .set(userModel.toJson());
 
                           //pop
                           Future.delayed(Duration.zero).then((value) => Navigator.pop(context));
@@ -331,8 +334,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                           );
-
-
                         } else if (state is FirebaseAuthCurrentStates &&
                             state.status == Status.isFailed) {
                           Future.delayed(Duration.zero).then(

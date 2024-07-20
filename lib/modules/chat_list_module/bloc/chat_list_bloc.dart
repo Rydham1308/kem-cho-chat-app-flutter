@@ -1,10 +1,8 @@
 import 'dart:async';
-
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kem_cho/constants/status_enum.dart';
-import 'package:kem_cho/modules/user_list_module/model/chat_id_model.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/sp_keys.dart';

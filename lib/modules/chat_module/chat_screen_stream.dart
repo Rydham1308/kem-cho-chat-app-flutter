@@ -85,7 +85,7 @@ class _ChatScreenStreamState extends State<ChatScreenStream> {
           ValueListenableBuilder(
             valueListenable: selectedIndex,
             builder: (context, value, child) {
-             return selectedIndex.value != -1
+              return selectedIndex.value != -1
                   ? GestureDetector(
                       onTap: () {
                         _showDialog(context);
@@ -174,7 +174,6 @@ class _ChatScreenStreamState extends State<ChatScreenStream> {
                           return Expanded(
                             child: ListView.builder(
                               shrinkWrap: true,
-                              key: const PageStorageKey<String>('controllerA'),
                               controller: _scrollController,
                               itemCount: snapshot.data?.docs.length,
                               itemBuilder: (BuildContext context, int index) {

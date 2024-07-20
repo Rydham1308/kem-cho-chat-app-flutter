@@ -229,8 +229,8 @@ class LoginState extends State<Login> {
                       listener: (context, state) {
                         if (state is FirebaseAuthCurrentStates &&
                             state.status == Status.isRegistered) {
-                          Future.delayed(Duration.zero)
-                              .then((value) => Navigator.pushReplacementNamed(context, '/chat-list'));
+                          Future.delayed(Duration.zero).then(
+                              (value) => Navigator.pushReplacementNamed(context, '/chat-list'));
                         } else if (state is FirebaseAuthCurrentStates &&
                             state.status == Status.isError) {
                           Future.delayed(Duration.zero).then(
@@ -258,26 +258,28 @@ class LoginState extends State<Login> {
                           ),
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              userModel.email = txtEmail.text.trim();
-                              userModel.pass = txtPass.text.trim();
-                              context
-                                  .read<FirebaseAuthBloc>()
-                                  .add(UserSignInEvent(json: userModel.toJson()));
-                              SharedPreferences sp = await SharedPreferences.getInstance();
-                              sp.setString(AppKeys.currentUserKey, txtEmail.text.trim());
-                              final db = FirebaseFirestore.instance;
-                              final response = await db.collection('user').get();
-                              final dataList = response.docs
-                                  .map((e) => UserModel.fromJson(e.data()))
-                                  .toList();
-                              int? curIndex;
-                              for(int i = 0; i< dataList.length;i++){
-                                if(txtEmail.text.trim() == dataList[i].email){
-                                  curIndex = i;
+                              try {
+                                userModel.email = txtEmail.text.trim();
+                                userModel.pass = txtPass.text.trim();
+                                context
+                                    .read<FirebaseAuthBloc>()
+                                    .add(UserSignInEvent(json: userModel.toJson()));
+                                SharedPreferences sp = await SharedPreferences.getInstance();
+                                sp.setString(AppKeys.currentUserKey, txtEmail.text.trim());
+                                final db = FirebaseFirestore.instance;
+                                final response = await db.collection('user').get();
+                                final dataList =
+                                    response.docs.map((e) => UserModel.fromJson(e.data())).toList();
+                                int? curIndex;
+                                for (int i = 0; i < dataList.length; i++) {
+                                  if (txtEmail.text.trim() == dataList[i].email) {
+                                    curIndex = i;
+                                  }
                                 }
-                              }
-                              sp.setInt(AppKeys.currentUserIndex, curIndex ?? 0);
-                              sp.setString(AppKeys.currentUserId, dataList[curIndex ?? 0].key ?? '');
+                                sp.setInt(AppKeys.currentUserIndex, curIndex ?? 0);
+                                sp.setString(
+                                    AppKeys.currentUserId, dataList[curIndex ?? 0].key ?? '');
+                              } catch (e) {}
                             }
                           },
                           child:
