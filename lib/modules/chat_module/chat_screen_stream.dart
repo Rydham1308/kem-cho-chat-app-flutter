@@ -17,6 +17,7 @@ class ChatScreenStream extends StatefulWidget {
 
 class _ChatScreenStreamState extends State<ChatScreenStream> {
   final ScrollController _scrollController = ScrollController(keepScrollOffset: true);
+  final FocusNode _textFieldFocus = FocusNode(debugLabel: 'TextField');
   String? name;
   String? id;
   String? connectionKey;
@@ -170,6 +171,17 @@ class _ChatScreenStreamState extends State<ChatScreenStream> {
                           ),
                         );
                       } else if (snapshot.connectionState == ConnectionState.active) {
+                        if (snapshot.hasData) {
+                          WidgetsBinding.instance.addPostFrameCallback(
+                            (_) => _scrollController.animateTo(
+                              _scrollController.position.maxScrollExtent,
+                              duration: const Duration(
+                                milliseconds: 750,
+                              ),
+                              curve: Curves.easeOutCirc,
+                            ),
+                          );
+                        }
                         if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
                           return Expanded(
                             child: ListView.builder(
